@@ -13,7 +13,7 @@ class Exercise3Test extends FunSuite with Matchers {
 
   test("that compress consecutive duplicates") {
     val duplicates = List('a', 'a', 'a', 'a', 'b', 'c', 'c', 'a', 'a', 'd', 'e', 'e', 'e', 'e')
-    var packed = List(List('a', 'a', 'a', 'a'),
+    val packed = List(List('a', 'a', 'a', 'a'),
       List('b'),
       List('c', 'c'),
       List('a', 'a'),
