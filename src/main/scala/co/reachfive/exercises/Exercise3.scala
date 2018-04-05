@@ -2,28 +2,17 @@ package co.reachfive.exercises
 
 object Exercise3 {
   def pack[T](list: List[T]): List[List[T]] = {
-
-    var lastElt: Option[T] = None
-    var packedList: List[List[T]] = List()
-    var subPackedList: List[T] = List()
-
-    list foreach (
-      t => {
-        if(lastElt.isDefined && (lastElt.get != t) ) {
-          packedList :+= subPackedList
-          subPackedList = List(t)
-        } else {
-          subPackedList :+= t
-        }
-
-        lastElt = Some(t)
-      }
-      )
-
-    // last subPackedList has to be added
-    // @TODO : check expected behavior for an empty List. There default behavior is List() => List(List())
-    packedList :+= subPackedList
-
-    packedList
+    list match {
+      case Nil => Nil
+      case x :: Nil => (x :: Nil) :: Nil
+      case x :: y :: xs =>
+        if(x == y)
+          Exercise3.pack[T](y :: xs) match {
+            case Nil => Nil                     // avoid a compilation warning, but should not happen here
+            case l :: lxs => (x :: l) :: lxs
+          }
+        else
+          ((x :: Nil) :: Nil) ++ Exercise3.pack[T](y :: xs)
+    }
   }
 }

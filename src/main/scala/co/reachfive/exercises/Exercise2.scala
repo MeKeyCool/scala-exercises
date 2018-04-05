@@ -2,19 +2,14 @@ package co.reachfive.exercises
 
 object Exercise2 {
   def compress[T](list: List[T]): List[T] = {
-
-    var lastElt: Option[T] = None
-    var compressedList: List[T] = List()
-
-    list foreach (
-      t => {
-        if(lastElt.isEmpty || (lastElt.get != t) ) {
-          compressedList :+= t
-          lastElt = Some(t)
-        }
-      }
-      )
-
-    compressedList
+    list match {
+      case Nil => Nil
+      case x :: Nil => x :: Nil
+      case x :: y :: xs =>
+        if(x == y)
+          Exercise2.compress[T](y :: xs)
+        else
+          x :: Exercise2.compress[T](y :: xs)
+    }
   }
 }
